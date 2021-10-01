@@ -25,7 +25,7 @@ int ft_pipex(int fd1, int fd2, char **argv, char **envp)
 	{
 		//child process
 		printf("child\n");
-		parsing(envp, argv);
+		execute(envp, argv);
 	}
 	else
 	{
