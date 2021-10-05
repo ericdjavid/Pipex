@@ -12,29 +12,58 @@
 
 #include "ft_pipex.h"
 
-int ft_pipex(int fd1, int fd2, char **argv, char **envp)
+void ft_child_process(char **argv, char **envp, t_elems *elms)
 {
-	int fd[2];
-	int pid;
+	//CHILD 1
+	int fd_in;
 
-	//convert argv[2] and argv[3]
-	pipe(fd);
-	pid = fork();
+	printf("\narv[2] == %s\n", argv[2]);
+	fd_in = open(argv[1], O_RDONLY);
+	dup2(fd_in, 0);
+	if(dup2(elms->fd[1], 1) < 0)//cmd 1 is written to fd[1] (write), which become STDIN
+		exit_perror("Error with file descriptor", elms);
+	close(elms->fd[0]);
+	close(elms->fd[1]);
+	//execute(envp, argv, elms);
+	execlp("ls", "-la", NULL);
+}
 
-	if (pid == 0)
-	{
-		//child process
-		printf("child\n");
-		execute(envp, argv);
-	}
-	else
-	{
-		//parent process
-		wait(NULL);
-		printf("parent\n");
-	}
 
-	return (1);
+void ft_child2_process(char **argv, char **envp, t_elems *elms)
+{
+	//CHILD 2
+	int fd_out;
+
+	fd_out = open(argv[4], O_CREAT | O_RDWR);
+	dup2(elms->fd[0], 0); // send cmd1 output to cmd2 (STDIN)
+	close(elms->fd[0]);
+	close(elms->fd[1]);
+	execlp("wc", "-lw", NULL);
+
+}
+int ft_pipex(char **argv, char **envp, t_elems *elm)
+{
+	pid_t 	child1;
+	pid_t 	child2;
+	int 	status;
+
+	if (pipe(elm->fd) == -1)
+		error_deal(errno);
+	child1 = fork();
+	if (child1 == - 1)
+		error_deal(errno);
+	if (child1 == 0)
+		ft_child_process(argv, envp, elm);
+	child2 = fork();
+	if (child2 == - 1)
+		error_deal(errno);
+	if (child2 == 0)
+		ft_child2_process(argv, envp, elm);
+	close(elm->fd[0]);
+	close(elm->fd[1]);
+	waitpid(child1, &status, 0);
+	waitpid(child2, &status, 0);
+	return (0);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -43,15 +72,11 @@ int main(int argc, char **argv, char **envp)
 	//TODO deal with basic errors
 	int fd1;
 	int fd2;
+	t_elems elm;
 
-	fd1 = open(argv[1], O_RDONLY);
-	fd2 = open(argv[4], O_CREAT | O_RDWR);
-	if (fd2 == -1 | fd1 == -1)
-	{
-		printf("problem\n");
-		return (-1);
-	}
-
-	ft_pipex(fd1, fd2, argv, envp);
+	elm.cut_paths = NULL;
+	if (argc != 5)
+		error_deal(EINVAL);
+	ft_pipex(argv, envp, &elm);
 	return (0);
 }

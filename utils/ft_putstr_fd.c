@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edjavid <ericdjavid@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/08 23:14:33 by edjavid           #+#    #+#             */
-/*   Updated: 2020/12/13 14:53:58 by edjavid          ###   ########.fr       */
+/*   Created: 2020/12/01 12:03:15 by edjavid           #+#    #+#             */
+/*   Updated: 2020/12/01 12:03:17 by edjavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "../ft_pipex.h"
 
-void ft_bzero(void *s, size_t n)
+void		ft_putchar_fd(char c, int fd)
 {
-	char *p;
-	int i;
+	write(fd, &c, 1);
+}
 
-	p = s;
-	i = 0;
-	while (n > 0)
-	{
-		p[i] = '\0';
-		i++;
-		n--;
-	}
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (s && *s)
+		ft_putchar_fd(*s++, fd);
 }

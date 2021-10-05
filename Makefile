@@ -14,12 +14,14 @@ NAME = pipex
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC =   ft_pipex.c          		\
-		ft_bzero.c					\
-		ft_split.c					\
-		ft_execute.c				\
-		ft_substr.c					\
-		ft_strjoin.c				\
+SRC =   ft_pipex.c          		        \
+		utils/ft_bzero.c					\
+		utils/ft_split.c					\
+		ft_execute.c				        \
+		utils/ft_substr.c					\
+		utils/ft_strjoin.c				    \
+		utils/ft_putstr_fd.c                 \
+		ft_errors.c                         \
 
 INC =   ft_pipex.h             		\
 
