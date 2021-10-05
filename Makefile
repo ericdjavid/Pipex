@@ -14,24 +14,25 @@ NAME = pipex
 
 FLAGS = -Wall -Wextra -Werror
 
+OBJS = $(SRC:.c=.o)
+
 SRC =   ft_pipex.c          		        \
 		utils/ft_bzero.c					\
 		utils/ft_split.c					\
 		ft_execute.c				        \
 		utils/ft_substr.c					\
 		utils/ft_strjoin.c				    \
-		utils/ft_putstr_fd.c                 \
+		utils/ft_putstr_fd.c                \
 		ft_errors.c                         \
 
-INC =   ft_pipex.h             		\
+INC =   ft_pipex.h             				\
 
-all: $(NAME)
 
-$(NAME):
-	gcc -g -fsanitize=address $(FLAGS) -o $(NAME) $(SRC) $(INC)
+all: $(OBJS)
+	gcc $(FLAGS) -o pipex -ggdb $(OBJS)
 
-skiperror:
-	gcc -ggdb -o $(NAME) $(SRC) -g $(INC)
+skiperror: $(OBJS)
+	gcc  -ggdb -o pipex $(OBJS) 
 
 clean:
 	@rm -rf *.o

@@ -23,14 +23,13 @@ int good_path_arr(char *str)
     return -1;
 }
 
-void parsing(char *envp[], char **argv, char **cut_paths)
+char *get_path_line(char **envp)
 {
-    char *paths;
     int size;
     int good_nb;
-    char **whole_cmd;
+    int i;
 
-    int i = 0;
+    i = 0;
     while (envp[i])
     {
         if(good_path_arr(envp[i]) == 1)
@@ -41,17 +40,23 @@ void parsing(char *envp[], char **argv, char **cut_paths)
         i++;
     }
     size = ft_strlen(envp[good_nb]);
-    paths = ft_substr(envp[good_nb], 5, size);
-    cut_paths = ft_split(paths, ':');
-    free(paths);
+    return (ft_substr(envp[good_nb], 5, size));
+}
 
-    whole_cmd = ft_split(argv[2], ' ');
-
-    /*
+/*
     A function that try the command with the cut_paths
-    */
+*/
+void parsing(char *envp[], char **argv, char **cut_paths)
+{
+    char **whole_cmd;
+    int i;
+
+    cut_paths = ft_split(get_path_line(envp), ':');
+    whole_cmd = ft_split(argv[2], ' ');
     char *cmd_ok = "/ls";
+    
     i = 0;
+
     char *good[] = {"ls", NULL};
     while (cut_paths[i])
     {
@@ -59,35 +64,19 @@ void parsing(char *envp[], char **argv, char **cut_paths)
         printf("%s\n", joined);
         if (execve(joined, good, envp) != -1)
         {
+            printf("fuckiiiing break");
             break;
         }
         i++;
 	}
-	ft_putstr_fd("\nthe good path is at line %d\n", 1);
+
+
 
 	/*
 	Free the stuffs
 	*/
     ft_matr_del_and_free(&cut_paths);
 	ft_matr_del_and_free(&whole_cmd);
-	//cut_paths
-    i = 0;
-//    while (cut_paths[i])
-//    {
-//       free(cut_paths[i]);
-//       i++;
-//    }
-//    free(cut_paths);
-//
-//    i = 0;
-//	while (whole_cmd[i])
-//	{
-//		printf("%s\n", whole_cmd[i]);
-//		free(whole_cmd[i]);
-//		i++;
-//	}
-//	free(whole_cmd);
-
 }
 
 
@@ -101,5 +90,6 @@ void    execute(char *envp[], char **argv, t_elems *elms)
    char **cut_paths;
    //parsing(envp, argv, elms->cut_paths);
    parsing(envp, argv, cut_paths);
+printf("give me a fuckiiiing break");
 
 }

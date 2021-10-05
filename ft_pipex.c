@@ -17,15 +17,16 @@ void ft_child_process(char **argv, char **envp, t_elems *elms)
 	//CHILD 1
 	int fd_in;
 
-	printf("\narv[2] == %s\n", argv[2]);
-	fd_in = open(argv[1], O_RDONLY);
-	dup2(fd_in, 0);
-	if(dup2(elms->fd[1], 1) < 0)//cmd 1 is written to fd[1] (write), which become STDIN
-		exit_perror("Error with file descriptor", elms);
-	close(elms->fd[0]);
-	close(elms->fd[1]);
-	//execute(envp, argv, elms);
-	execlp("ls", "-la", NULL);
+	//fd_in = open(argv[1], O_RDONLY);
+	//dup2(fd_in, 0); //we read file and STDIN
+	//if(dup2(elms->fd[1], 1) < 0)// result of cmd 1 is written to STDIN
+	//	exit_perror("Error with file descriptor", elms);
+	//close(elms->fd[0]);
+	//close(elms->fd[1]);
+	execute(envp, argv, elms);
+
+	//execlp("cat", "-e", NULL);
+
 }
 
 
@@ -34,11 +35,12 @@ void ft_child2_process(char **argv, char **envp, t_elems *elms)
 	//CHILD 2
 	int fd_out;
 
-	fd_out = open(argv[4], O_CREAT | O_RDWR);
+	fd_out = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 00664);
+	dup2(fd_out, 1);
 	dup2(elms->fd[0], 0); // send cmd1 output to cmd2 (STDIN)
 	close(elms->fd[0]);
 	close(elms->fd[1]);
-	execlp("wc", "-lw", NULL);
+	execlp("cat", "-e", NULL);
 
 }
 int ft_pipex(char **argv, char **envp, t_elems *elm)
@@ -53,12 +55,16 @@ int ft_pipex(char **argv, char **envp, t_elems *elm)
 	if (child1 == - 1)
 		error_deal(errno);
 	if (child1 == 0)
+	{
+		close(elm->fd[0]);
+		close(elm->fd[1]);
 		ft_child_process(argv, envp, elm);
+	}
 	child2 = fork();
 	if (child2 == - 1)
 		error_deal(errno);
-	if (child2 == 0)
-		ft_child2_process(argv, envp, elm);
+//	if (child2 == 0)
+//		ft_child2_process(argv, envp, elm);
 	close(elm->fd[0]);
 	close(elm->fd[1]);
 	waitpid(child1, &status, 0);
