@@ -42,7 +42,7 @@ int ft_count(char const *s, int cnts);
 char *ft_substr(char const *s, unsigned int start, size_t len);
 int ft_strlen(const char *str);
 void    execute(char *envp[], char **argv, t_elems *elms);
-int     catch_cmd(char *cut_paths, char *cmd);
+char *catch_cmd(char **cut_paths, char *cmd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 int	error_deal(int the_errno);

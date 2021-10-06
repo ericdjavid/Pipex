@@ -43,6 +43,23 @@ char *get_path_line(char **envp)
     return (ft_substr(envp[good_nb], 5, size));
 }
 
+char *catch_cmd(char **cut_paths, char *cmd)
+{
+	int i;
+	char *temp;
+	char *path;
+
+	temp = malloc(sizeof(char) * ft_strlen(cmd) + 2);
+	ft_bzero(temp, ft_strlen(cmd) + 2);
+	i = 0;
+	while (cut_paths[i])
+	{
+
+
+		i++;
+	}
+}
+
 /*
     A function that try the command with the cut_paths
 */
@@ -53,25 +70,21 @@ void parsing(char *envp[], char **argv, char **cut_paths)
 
     cut_paths = ft_split(get_path_line(envp), ':');
     whole_cmd = ft_split(argv[2], ' ');
-    char *cmd_ok = "/ls";
-    
-    i = 0;
 
-    char *good[] = {"ls", NULL};
+	i = 0;
     while (cut_paths[i])
     {
-        char *joined = ft_strjoin(cut_paths[i], cmd_ok);
-        printf("%s\n", joined);
-        if (execve(joined, good, envp) != -1)
-        {
-            printf("fuckiiiing break");
-            break;
-        }
+    //	char *exe = catch_cmd(cut_paths, whole_cmd[0]);
+	//	printf("arg is %s", exe);
+	//	free(exe);
+     //   char *joined = ft_strjoin(cut_paths[i], cmd_ok);
+     //   printf("%s\n", joined);
+     //   if (execve(joined, whole_cmd, envp) != -1)
+     //   {
+     //       break;
+     //   }
         i++;
 	}
-
-
-
 	/*
 	Free the stuffs
 	*/
@@ -80,16 +93,9 @@ void parsing(char *envp[], char **argv, char **cut_paths)
 }
 
 
-int catch_cmd(char *cut_paths, char *cmd)
-{
-
-}   
-
 void    execute(char *envp[], char **argv, t_elems *elms)
 {
    char **cut_paths;
    //parsing(envp, argv, elms->cut_paths);
    parsing(envp, argv, cut_paths);
-printf("give me a fuckiiiing break");
-
 }

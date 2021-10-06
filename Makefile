@@ -17,30 +17,35 @@ FLAGS = -Wall -Wextra -Werror
 OBJS = $(SRC:.c=.o)
 
 SRC =   ft_pipex.c          		        \
-		utils/ft_bzero.c					\
 		utils/ft_split.c					\
 		ft_execute.c				        \
 		utils/ft_substr.c					\
 		utils/ft_strjoin.c				    \
 		utils/ft_putstr_fd.c                \
 		ft_errors.c                         \
+		utils/ft_bzero.c                    \
 
 INC =   ft_pipex.h             				\
 
 
-all: $(OBJS)
-	gcc $(FLAGS) -o pipex -ggdb $(OBJS)
+all: $(NAME)
 
-skiperror: $(OBJS)
-	gcc  -ggdb -o pipex $(OBJS) 
+$(NAME):
+	gcc -g -fsanitize=address $(FLAGS) -o $(NAME) $(SRC)
+
+skiperror:
+	gcc -ggdb -o $(NAME) $(SRC) -g
 
 clean:
 	@rm -rf *.o
+	@rm -rf utils/*.o
 	@echo "cleaning .o files"
 
 fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
+
+reskiperror: fclean skiperror
 
 .PHONY: all skiperror clean fclean re
