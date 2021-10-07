@@ -43,59 +43,61 @@ char *get_path_line(char **envp)
     return (ft_substr(envp[good_nb], 5, size));
 }
 
-char *catch_cmd(char **cut_paths, char *cmd)
+char *catch_cmd(char *path, char *cmd)
 {
 	int i;
 	char *temp;
-	char *path;
+	char *good;
 
 	temp = malloc(sizeof(char) * ft_strlen(cmd) + 2);
 	ft_bzero(temp, ft_strlen(cmd) + 2);
 	i = 0;
-	while (cut_paths[i])
+	while (path[i])
 	{
-
-
+		temp[i] = path[i];
 		i++;
 	}
+	temp[i] = '/';
+	good = ft_strjoin(temp, cmd);
+	free(temp);
+	return(good);
 }
 
 /*
     A function that try the command with the cut_paths
 */
-void parsing(char *envp[], char **argv, char **cut_paths)
+char* parsing(char *envp[], char *arg, char **cut_paths)
 {
-    char **whole_cmd;
+    char *cmd;
+    char *exe;
     int i;
 
     cut_paths = ft_split(get_path_line(envp), ':');
-    whole_cmd = ft_split(argv[2], ' ');
-
+    cmd = (ft_split(arg, ' '))[0];
 	i = 0;
     while (cut_paths[i])
     {
-    //	char *exe = catch_cmd(cut_paths, whole_cmd[0]);
-	//	printf("arg is %s", exe);
-	//	free(exe);
-     //   char *joined = ft_strjoin(cut_paths[i], cmd_ok);
-     //   printf("%s\n", joined);
-     //   if (execve(joined, whole_cmd, envp) != -1)
-     //   {
-     //       break;
-     //   }
+    	exe = catch_cmd(cut_paths[i], cmd);
+		if (access(exe, F_OK) == 0)
+		{
+			ft_matr_del_and_free(&cut_paths);
+			free(cmd);
+			return (exe);
+		}
+		free(exe);
         i++;
 	}
-	/*
-	Free the stuffs
-	*/
     ft_matr_del_and_free(&cut_paths);
-	ft_matr_del_and_free(&whole_cmd);
+	free(cmd);
 }
 
-
-void    execute(char *envp[], char **argv, t_elems *elms)
+void   execute(char *envp[], char *arg, t_elems *elms)
 {
    char **cut_paths;
-   //parsing(envp, argv, elms->cut_paths);
-   parsing(envp, argv, cut_paths);
+   char **whole_cmds;
+   char *great_cmd = parsing(envp, arg, cut_paths);
+
+   whole_cmds = ft_split(arg, ' ');
+   execve(great_cmd, whole_cmds, envp);
+   ft_matr_del_and_free(&cut_paths);
 }
