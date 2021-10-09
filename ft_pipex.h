@@ -45,8 +45,9 @@ char *catch_cmd(char *paths, char *cmd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 int	error_deal(int the_errno);
-char* parsing(char *envp[], char *arg, char **cut_paths);
+char* parsing(char *envp[], char *arg);
 int	ft_matr_del_and_free(char ***matrix);
 int	exit_perror(char *s, t_elems *elms);
+void	error_nf();
 
 #endif

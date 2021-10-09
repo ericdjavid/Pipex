@@ -18,10 +18,15 @@ int	error_deal(int the_errno)
 	ft_putstr_fd("Error : ", 2);
 	ft_putstr_fd(strerror(the_errno), 2);
 	ft_putchar_fd('\n', 2);
-	//ft_exit(all, 1);
 	exit(EXIT_FAILURE);
 }
 
+void	error_nf()
+{
+	ft_putstr_fd("Error : Command not found", 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
+}
 
 int	ft_matr_del_and_free(char ***matrix)
 {
@@ -43,6 +48,5 @@ int	ft_matr_del_and_free(char ***matrix)
 int	exit_perror(char *s, t_elems *elms)
 {
 	perror(s);
-//	ft_matr_del_and_free();
 	exit(EXIT_FAILURE);
 }

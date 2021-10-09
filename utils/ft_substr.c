@@ -12,8 +12,6 @@
 
 #include "../ft_pipex.h"
 
-
-
 int ft_strlen(const char *str)
 {
 	int i;

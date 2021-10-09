@@ -49,8 +49,9 @@ char *catch_cmd(char *path, char *cmd)
 	char *temp;
 	char *good;
 
-	temp = malloc(sizeof(char) * ft_strlen(cmd) + 2);
-	ft_bzero(temp, ft_strlen(cmd) + 2);
+	temp = malloc(sizeof(char) * (ft_strlen(cmd)
+			+ ft_strlen(path) + 2));
+	ft_bzero(temp, ft_strlen(cmd) + ft_strlen(path) + 2);
 	i = 0;
 	while (path[i])
 	{
@@ -66,38 +67,44 @@ char *catch_cmd(char *path, char *cmd)
 /*
     A function that try the command with the cut_paths
 */
-char* parsing(char *envp[], char *arg, char **cut_paths)
+char* parsing(char *envp[], char *arg)
 {
-    char *cmd;
+	char **cut_paths;
+    char **cmd;
     char *exe;
+    char *line_path;
     int i;
 
-    cut_paths = ft_split(get_path_line(envp), ':');
-    cmd = (ft_split(arg, ' '))[0];
+    line_path = get_path_line(envp);
+    cut_paths = ft_split(line_path, ':');
+    cmd = ft_split(arg, ' ');
 	i = 0;
     while (cut_paths[i])
     {
-    	exe = catch_cmd(cut_paths[i], cmd);
+    	exe = catch_cmd(cut_paths[i], cmd[0]);
 		if (access(exe, F_OK) == 0)
 		{
-			ft_matr_del_and_free(&cut_paths);
-			free(cmd);
 			return (exe);
 		}
 		free(exe);
         i++;
 	}
-    ft_matr_del_and_free(&cut_paths);
-	free(cmd);
+	free(line_path);
+	ft_matr_del_and_free(&cmd);
+	ft_matr_del_and_free(&cut_paths);
+	return (NULL);
 }
 
 void   execute(char *envp[], char *arg, t_elems *elms)
 {
-   char **cut_paths;
    char **whole_cmds;
-   char *great_cmd = parsing(envp, arg, cut_paths);
+   char *great_cmd;
 
+   great_cmd = parsing(envp, arg);
+   if (great_cmd == NULL)
+   {
+	   error_nf();
+   }
    whole_cmds = ft_split(arg, ' ');
    execve(great_cmd, whole_cmds, envp);
-   ft_matr_del_and_free(&cut_paths);
 }
