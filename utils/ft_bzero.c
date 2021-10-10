@@ -12,10 +12,10 @@
 
 #include "../ft_pipex.h"
 
-void ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
-	char *p;
-	int i;
+	char	*p;
+	int		i;
 
 	p = s;
 	i = 0;

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
-//TODO TREAT FREES
 
 int	error_deal(int the_errno)
 {
@@ -21,7 +20,7 @@ int	error_deal(int the_errno)
 	exit(EXIT_FAILURE);
 }
 
-void	error_nf()
+void	error_nf(void)
 {
 	ft_putstr_fd("Error : Command not found", 2);
 	ft_putchar_fd('\n', 2);

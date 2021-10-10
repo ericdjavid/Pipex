@@ -12,10 +12,10 @@
 
 #include "../ft_pipex.h"
 
-int get_word_len(char const *str, char c)
+int	get_word_len(char const *str, char c)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = 0;
@@ -29,21 +29,20 @@ int get_word_len(char const *str, char c)
 	return (len);
 }
 
-char *ft_strnew(size_t size)
+char	*ft_strnew(size_t size)
 {
-	char *str;
+	char	*str;
 
 	str = (char *)malloc(sizeof(char) * size + 1);
 	if (!str)
 		return (NULL);
-	//ft_bzero(str, size + 1);
 	return (str);
 }
 
-int ft_countwords(char const *str, char c)
+int	ft_countwords(char const *str, char c)
 {
-	int count;
-	int i;
+	int	count;
+	int	i;
 
 	i = 0;
 	count = 0;
@@ -59,12 +58,12 @@ int ft_countwords(char const *str, char c)
 	return (count);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	int i;
-	int j;
-	int k;
-	char **str2;
+	int		i;
+	int		j;
+	int		k;
+	char	**str2;
 
 	if (!s || !(str2 = (char **)malloc(sizeof(*str2) *
 									   (ft_countwords(s, c) + 1))))
