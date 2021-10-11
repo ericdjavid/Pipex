@@ -18,13 +18,13 @@ void	ft_child_process(char **argv, char **envp, t_elems *elms)
 
 	fd_in = open(argv[1], O_RDONLY);
 	if (fd_in == -1)
-		exit_perror("Error", elms);
+		exit_perror("Error");
 	dup2(fd_in, 0);
 	if (dup2(elms->fd[1], 1) < 0)
-		exit_perror("Error with file descriptor", elms);
+		exit_perror("Error with file descriptor");
 	close(elms->fd[0]);
 	close(elms->fd[1]);
-	execute(envp, argv[2], elms);
+	execute(envp, argv[2]);
 }
 
 void	ft_child2_process(char **argv, char **envp, t_elems *elms)
@@ -33,12 +33,12 @@ void	ft_child2_process(char **argv, char **envp, t_elems *elms)
 
 	fd_out = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 00664);
 	if (fd_out == -1)
-		exit_perror("Error : ", elms);
+		exit_perror("Error : ");
 	dup2(fd_out, 1);
 	dup2(elms->fd[0], 0);
 	close(elms->fd[0]);
 	close(elms->fd[1]);
-	execute(envp, argv[3], elms);
+	execute(envp, argv[3]);
 }
 
 int	ft_pipex(char **argv, char **envp, t_elems *elm)

@@ -95,7 +95,7 @@ char	*parsing(char *envp[], char *arg)
 	return (NULL);
 }
 
-void	execute(char *envp[], char *arg, t_elems *elms)
+void	execute(char *envp[], char *arg)
 {
 	char	**whole_cmds;
 	char	*great_cmd;

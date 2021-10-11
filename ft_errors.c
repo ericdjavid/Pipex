@@ -44,7 +44,7 @@ int	ft_matr_del_and_free(char ***matrix)
 	return (0);
 }
 
-int	exit_perror(char *s, t_elems *elms)
+int	exit_perror(char *s)
 {
 	perror(s);
 	exit(EXIT_FAILURE);

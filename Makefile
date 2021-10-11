@@ -31,7 +31,7 @@ INC =   ft_pipex.h             				\
 all: $(NAME)
 
 $(NAME):
-	gcc -g -fsanitize=address $(FLAGS) -o $(NAME) $(SRC)
+	gcc -g $(FLAGS) -o $(NAME) $(SRC)
 
 skiperror:
 	gcc -ggdb -o $(NAME) $(SRC) -g

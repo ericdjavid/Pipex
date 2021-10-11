@@ -39,14 +39,14 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_count(char const *s, int cnts);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strlen(const char *str);
-void	execute(char *envp[], char *arg, t_elems *elms);
+void	execute(char *envp[], char *arg);
 char	*catch_cmd(char *paths, char *cmd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
 int		error_deal(int the_errno);
 char	*parsing(char *envp[], char *arg);
 int		ft_matr_del_and_free(char ***matrix);
-int		exit_perror(char *s, t_elems *elms);
+int		exit_perror(char *s);
 void	error_nf(void);
 
 #endif
