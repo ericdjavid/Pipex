@@ -65,15 +65,16 @@ char	**ft_split(char const *s, char c)
 	int		k;
 	char	**str2;
 
-	if (!s || !(str2 = (char **)malloc(sizeof(*str2) *
-									   (ft_countwords(s, c) + 1))))
+	str2 = (char **)malloc(sizeof(*str2) * (ft_countwords(s, c) + 1));
+	if ((!s) || (!(str2)))
 		return (NULL);
 	i = -1;
 	j = 0;
 	while (++i < ft_countwords(s, c))
 	{
 		k = 0;
-		if (!(str2[i] = ft_strnew(get_word_len(&s[j], c) + 1)))
+		str2[i] = ft_strnew(get_word_len(&s[j], c) + 1);
+		if (!(str2[i]))
 			str2[i] = NULL;
 		while (s[j] == c)
 			j++;
