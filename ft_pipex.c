@@ -14,15 +14,15 @@
 
 char	*find_the_cmd(char **cut_paths, char **cmd)
 {
-	int i;
-	char *exe;
+	int		i;
+	char	*exe;
 
 	i = 0;
 	while (cut_paths[i])
 	{
 		exe = catch_cmd(cut_paths[i], cmd[0]);
 		if (exe == NULL)
-			break;
+			break ;
 		if (access(exe, F_OK) == 0)
 			return (exe);
 		free(exe);
