@@ -12,7 +12,7 @@
 
 #include "ft_pipex.h"
 
-void free_all(char *line_path, char **cmd, char **cut_paths)
+void	free_all(char *line_path, char **cmd, char **cut_paths)
 {
 	free(line_path);
 	ft_matr_del_and_free(&cmd);
