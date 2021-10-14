@@ -48,5 +48,8 @@ char	*parsing(char *envp[], char *arg);
 int		ft_matr_del_and_free(char ***matrix);
 int		exit_perror(char *s);
 void	error_nf(void);
+int		malloc_error(void);
+char	*get_path_line(char **envp);
+char	*find_the_cmd(char **cut_paths, char **cmd);
 
 #endif

@@ -49,3 +49,9 @@ int	exit_perror(char *s)
 	perror(s);
 	exit(EXIT_FAILURE);
 }
+
+int	malloc_error(void)
+{
+	ft_putstr_fd("Error : Malloc alloc has failed", 2);
+	exit(EXIT_FAILURE);
+}

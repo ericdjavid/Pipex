@@ -51,6 +51,8 @@ char	*catch_cmd(char *path, char *cmd)
 
 	temp = malloc(sizeof(char) * (ft_strlen(cmd)
 				+ ft_strlen(path) + 2));
+	if (temp == NULL)
+		return (NULL);
 	ft_bzero(temp, ft_strlen(cmd) + ft_strlen(path) + 2);
 	i = 0;
 	while (path[i])
@@ -71,24 +73,26 @@ char	*parsing(char *envp[], char *arg)
 {
 	char	**cut_paths;
 	char	**cmd;
-	char	*exe;
 	char	*line_path;
-	int		i;
 
 	line_path = get_path_line(envp);
+	if (line_path == NULL)
+		malloc_error();
 	cut_paths = ft_split(line_path, ':');
-	cmd = ft_split(arg, ' ');
-	i = 0;
-	while (cut_paths[i])
+	if (cut_paths == NULL)
 	{
-		exe = catch_cmd(cut_paths[i], cmd[0]);
-		if (access(exe, F_OK) == 0)
-		{
-			return (exe);
-		}
-		free(exe);
-		i++;
+		free(line_path);
+		malloc_error();
 	}
+	cmd = ft_split(arg, ' ');
+	if (cmd == NULL)
+	{
+		free(line_path);
+		ft_matr_del_and_free(&cut_paths);
+		malloc_error();
+	}
+	if (find_the_cmd(cut_paths, cmd))
+		return (find_the_cmd(cut_paths, cmd));
 	free(line_path);
 	ft_matr_del_and_free(&cmd);
 	ft_matr_del_and_free(&cut_paths);
