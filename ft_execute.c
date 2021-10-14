@@ -93,9 +93,7 @@ char	*parsing(char *envp[], char *arg)
 	}
 	if (find_the_cmd(cut_paths, cmd))
 		return (find_the_cmd(cut_paths, cmd));
-	free(line_path);
-	ft_matr_del_and_free(&cmd);
-	ft_matr_del_and_free(&cut_paths);
+	free_all(line_path, cmd, cut_paths);
 	return (NULL);
 }
 

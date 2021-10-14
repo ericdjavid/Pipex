@@ -24,6 +24,7 @@ SRC =   ft_pipex.c          		        \
 		utils/ft_putstr_fd.c                \
 		ft_errors.c                         \
 		utils/ft_bzero.c                    \
+		ft_free.c                           \
 
 INC =   ft_pipex.h             				\
 

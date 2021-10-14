@@ -51,5 +51,6 @@ void	error_nf(void);
 int		malloc_error(void);
 char	*get_path_line(char **envp);
 char	*find_the_cmd(char **cut_paths, char **cmd);
+void	free_all(char *line_path, char **cmd, char **cut_paths);
 
 #endif
